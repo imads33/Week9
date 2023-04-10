@@ -33,8 +33,7 @@ public class ArokyaHospital {
                             patient.displayPatientDetails();
                             break;
                         case 2:
-                            Patient p = new Patient();
-                            p.userInput();
+                            patient.userInput();
                             break;
                         default:
                             System.out.println("Invalid Choice");

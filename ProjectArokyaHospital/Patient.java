@@ -13,6 +13,8 @@ interface Patients {
     public <T> void displayPatientDetails(T idOrName);
 
     public void displayPatientDetailsbyAge(Integer start, Integer stop);
+
+	public void userInput();
 }
 
 public class Patient implements Patients {
@@ -157,7 +159,7 @@ public class Patient implements Patients {
 
     public <T> void displayPatientDetails(T idOrName) throws NullPointerException {
         int count = 0;
-        if (patientDetials.size() == 0) {
+        if (patientDetials.size()< 1) {
             System.out.println("There no data present at this time");
         } else {
             if (idOrName == null) {
@@ -195,7 +197,7 @@ public class Patient implements Patients {
 
     public void displayPatientDetailsbyAge(Integer start, Integer stop) throws NullPointerException {
         int count = 0;
-        if (patientDetials.size() == 0) {
+        if (patientDetials.size() <1) {
             System.out.println("There no data present at this time");
         } else {
             if (start == null) {
@@ -224,7 +226,7 @@ public class Patient implements Patients {
                     }
                 }
                 if (count == 0) {
-                    System.out.println("there are no such patients belongs to this type " + idOrName);
+                    System.out.println("there are no such patients belongs to this age group");
                 }
             }
         }
@@ -245,16 +247,20 @@ public class Patient implements Patients {
             System.out.println("Enter age  range ex:(50-60) ");
             String value = sc.next();
             String a[] = value.split("-");
-            Integer start = Integer.parseInt(a[0]);
-            Integer stop = Integer.parseInt(a[1]);
-            if (a[1] == null) {
-                start = Integer.parseInt(a[0]);
-                stop = Integer.parseInt(a[0]);
-            } else if (start > stop) {
-                start = Integer.parseInt(a[1]);
-                stop = Integer.parseInt(a[0]);
-            }
+			Integer start;
+            Integer stop;
             try {
+				if(a.length>1){
+					start = Integer.parseInt(a[0]);
+					stop = Integer.parseInt(a[a.length-1]);
+					if (start > stop) {
+		                start = Integer.parseInt(a[a.length-1]);
+		                stop = Integer.parseInt(a[0]);
+					}
+				}else{
+	                start = Integer.parseInt(a[0]);
+	                stop = Integer.parseInt(a[0]);
+            	}
                 displayPatientDetailsbyAge(start, stop);
             } catch (NullPointerException e) {
                 System.out.println(e);
@@ -262,6 +268,7 @@ public class Patient implements Patients {
         } else if (temp <= 0 && temp > 3) {
             System.out.println("Invalid choice");
         } else {
+			System.out.println("Enter patient name or city");
             String value = sc.next();
             try {
                 displayPatientDetails(value);
